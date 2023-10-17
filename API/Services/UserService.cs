@@ -126,6 +126,32 @@ public class UserService : IUserService
 
                 if (userHasRole == false)
                 {
+                if (rolExists.Name == Authorization.Roles.Veterinarian.ToString())
+                    {
+
+                        if (!string.IsNullOrEmpty(model.Specialty) && !string.IsNullOrEmpty(model.PhoneNumber) && !string.IsNullOrEmpty(model.Name))
+                        {
+                            var veterinarian = new Veterinarian
+                            {
+                                Name = model.Name,
+                                PhoneNumber = model.PhoneNumber,
+                                Specialty = model.Specialty,
+                                IdUser = user.Id
+                            };
+                            _unitOfWork.Veterinarians.Add(veterinarian);
+                            await _unitOfWork.SaveAsync();
+                        }
+                        else
+                        {
+                            return $"Register veterinarians needs all data correct (Name, Position)";
+                        }
+
+                    }
+                    var withoutRole = user.Roles.FirstOrDefault(u => u.Name == Authorization.Roles.WithoutRol.ToString());
+                    if (withoutRole != null && model.Role.ToLower() != Authorization.Roles.WithoutRol.ToString().ToLower())
+                    {
+                        user.Roles.Remove(withoutRole);
+                    }
                     user.Roles.Add(rolExists);
                     _unitOfWork.Users.Update(user);
                     await _unitOfWork.SaveAsync();
