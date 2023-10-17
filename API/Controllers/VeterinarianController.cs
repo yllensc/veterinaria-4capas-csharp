@@ -4,11 +4,7 @@ using AutoMapper;
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 namespace API.Controllers
 {
     [ApiVersion("1.0")]
@@ -16,13 +12,13 @@ namespace API.Controllers
     [Authorize]
     public class VeterinarianController : ApiBaseController
     {
-        private readonly IUnitOfWork unitofwork;
-        private readonly IMapper mapper;
+        private readonly IUnitOfWork _unitOfwork;
+        private readonly IMapper _mapper;
 
         public VeterinarianController(IUnitOfWork unitofwork, IMapper mapper)
         {
-            this.unitofwork = unitofwork;
-            this.mapper = mapper;
+            this._unitOfwork = unitofwork;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -31,8 +27,8 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<VeterinarianDto>>> Get()
         {
-            var Veterinarian = await unitofwork.Veterinarians.GetAllAsync();
-            return mapper.Map<List<VeterinarianDto>>(Veterinarian);
+            var Veterinarian = await _unitOfwork.Veterinarians.GetAllAsync();
+            return _mapper.Map<List<VeterinarianDto>>(Veterinarian);
         }
 
         [HttpGet("{id}")]
@@ -41,12 +37,12 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<VeterinarianDto>> Get(int id)
         {
-            var Veterinarian = await unitofwork.Veterinarians.GetByIdAsync(id);
+            var Veterinarian = await _unitOfwork.Veterinarians.GetByIdAsync(id);
             if (Veterinarian == null)
             {
                 return NotFound();
             }
-            return this.mapper.Map<VeterinarianDto>(Veterinarian);
+            return this._mapper.Map<VeterinarianDto>(Veterinarian);
         }
 
         [HttpGet]
@@ -55,41 +51,25 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<VeterinarianDto>>> GetPagination([FromQuery] Params Params)
         {
-            var (totalRecords, records) = await unitofwork.Veterinarians.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
-            var listVeterinarian = mapper.Map<List<VeterinarianDto>>(records);
+            var (totalRecords, records) = await _unitOfwork.Veterinarians.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
+            var listVeterinarian = _mapper.Map<List<VeterinarianDto>>(records);
             return new Pager<VeterinarianDto>(listVeterinarian, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
-        }
-
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Veterinarian>> Post(VeterinarianDto VeterinarianDto)
-        {
-            var veterinarian = this.mapper.Map<Veterinarian>(VeterinarianDto);
-            this.unitofwork.Veterinarians.Add(veterinarian);
-            await unitofwork.SaveAsync();
-            if (veterinarian == null)
-            {
-                return BadRequest();
-            }
-            VeterinarianDto.Id = veterinarian.Id;
-            return CreatedAtAction(nameof(Post), new { id = VeterinarianDto.Id }, VeterinarianDto);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<VeterinarianDto>> Put(int id, [FromBody]VeterinarianDto veterinarianDto)
+        public async Task<ActionResult<VeterinarianDto>> Put(int id, [FromBody]VeterinarianDto VeterinarianDto)
         {
-            if (veterinarianDto == null)
+            if (VeterinarianDto == null)
             {
                 return NotFound();
             }
-            var veterinarian = this.mapper.Map<Veterinarian>(veterinarianDto);
-            unitofwork.Veterinarians.Update(veterinarian);
-            await unitofwork.SaveAsync();
-            return veterinarianDto;
+            var Veterinarian = this._mapper.Map<Veterinarian>(VeterinarianDto);
+            _unitOfwork.Veterinarians.Update(Veterinarian);
+            await _unitOfwork.SaveAsync();
+            return VeterinarianDto;
         }
 
         [HttpDelete("{id}")]
@@ -97,13 +77,13 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            var veterinarian = await unitofwork.Veterinarians.GetByIdAsync(id);
-            if (veterinarian == null)
+            var Veterinarian = await _unitOfwork.Veterinarians.GetByIdAsync(id);
+            if (Veterinarian == null)
             {
                 return NotFound();
             }
-            unitofwork.Veterinarians.Remove(veterinarian);
-            await unitofwork.SaveAsync();
+            _unitOfwork.Veterinarians.Remove(Veterinarian);
+            await _unitOfwork.SaveAsync();
             return NoContent();
         }
     }

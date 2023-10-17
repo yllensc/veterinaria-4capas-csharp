@@ -10,12 +10,12 @@ namespace API.Controllers
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
     [Authorize]
-    public class AppointmentController : ApiBaseController
+    public class MedicineController : ApiBaseController
     {
         private readonly IUnitOfWork _unitOfwork;
         private readonly IMapper _mapper;
 
-        public AppointmentController(IUnitOfWork unitofwork, IMapper mapper)
+        public MedicineController(IUnitOfWork unitofwork, IMapper mapper)
         {
             this._unitOfwork = unitofwork;
             this._mapper = mapper;
@@ -25,61 +25,67 @@ namespace API.Controllers
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<IEnumerable<AppointmentDto>>> Get()
+        public async Task<ActionResult<IEnumerable<MedicineDto>>> Get()
         {
-            var Appointment = await _unitOfwork.Appointments.GetAllAsync();
-            return _mapper.Map<List<AppointmentDto>>(Appointment);
+            var Medicine = await _unitOfwork.Medicines.GetAllAsync();
+            return _mapper.Map<List<MedicineDto>>(Medicine);
         }
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppointmentDto>> Get(int id)
+        public async Task<ActionResult<MedicineDto>> Get(int id)
         {
-            var Appointment = await _unitOfwork.Appointments.GetByIdAsync(id);
-            if (Appointment == null)
+            var Medicine = await _unitOfwork.Medicines.GetByIdAsync(id);
+            if (Medicine == null)
             {
                 return NotFound();
             }
-            return this._mapper.Map<AppointmentDto>(Appointment);
+            return this._mapper.Map<MedicineDto>(Medicine);
         }
 
         [HttpGet]
         [MapToApiVersion("1.1")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Pager<AppointmentDto>>> GetPagination([FromQuery] Params Params)
+        public async Task<ActionResult<Pager<MedicineDto>>> GetPagination([FromQuery] Params Params)
         {
-            var (totalRecords, records) = await _unitOfwork.Appointments.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
-            var listAppointment = _mapper.Map<List<AppointmentDto>>(records);
-            return new Pager<AppointmentDto>(listAppointment, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
+            var (totalRecords, records) = await _unitOfwork.Medicines.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
+            var listMedicine = _mapper.Map<List<MedicineDto>>(records);
+            return new Pager<MedicineDto>(listMedicine, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> RegisterAsync(AppointmentDto model)
+        public async Task<ActionResult<Medicine>> Post(MedicineDto MedicineDto)
         {
-            var appointment = _mapper.Map<Appointment>(model);
-            var result = await _unitOfwork.Appointments.RegisterAsync(appointment);
-            return Ok(result);
+            var Medicine = this._mapper.Map<Medicine>(MedicineDto);
+            this._unitOfwork.Medicines.Add(Medicine);
+            await _unitOfwork.SaveAsync();
+            if (Medicine == null)
+            {
+                return BadRequest();
+            }
+            MedicineDto.Id = Medicine.Id;
+            return CreatedAtAction(nameof(Post), new { id = MedicineDto.Id }, MedicineDto);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AppointmentDto>> Put(int id, [FromBody] AppointmentDto AppointmentDto)
+        public async Task<ActionResult<MedicineDto>> Put(int id, [FromBody]MedicineDto MedicineDto)
         {
-            if (AppointmentDto == null)
+            if (MedicineDto == null)
             {
                 return NotFound();
             }
-            var Appointment = this._mapper.Map<Appointment>(AppointmentDto);
-            _unitOfwork.Appointments.Update(Appointment);
+            var Medicine = this._mapper.Map<Medicine>(MedicineDto);
+            _unitOfwork.Medicines.Update(Medicine);
             await _unitOfwork.SaveAsync();
-            return AppointmentDto;
+            return MedicineDto;
         }
 
         [HttpDelete("{id}")]
@@ -87,12 +93,12 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            var Appointment = await _unitOfwork.Appointments.GetByIdAsync(id);
-            if (Appointment == null)
+            var Medicine = await _unitOfwork.Medicines.GetByIdAsync(id);
+            if (Medicine == null)
             {
                 return NotFound();
             }
-            _unitOfwork.Appointments.Remove(Appointment);
+            _unitOfwork.Medicines.Remove(Medicine);
             await _unitOfwork.SaveAsync();
             return NoContent();
         }

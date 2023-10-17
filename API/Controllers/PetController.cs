@@ -12,13 +12,13 @@ namespace API.Controllers
     [Authorize]
     public class PetController : ApiBaseController
     {
-        private readonly IUnitOfWork unitofwork;
-        private readonly IMapper mapper;
+        private readonly IUnitOfWork _unitOfwork;
+        private readonly IMapper _mapper;
 
         public PetController(IUnitOfWork unitofwork, IMapper mapper)
         {
-            this.unitofwork = unitofwork;
-            this.mapper = mapper;
+            this._unitOfwork = unitofwork;
+            this._mapper = mapper;
         }
 
         [HttpGet]
@@ -27,8 +27,8 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<IEnumerable<PetDto>>> Get()
         {
-            var pet = await unitofwork.Pets.GetAllAsync();
-            return mapper.Map<List<PetDto>>(pet);
+            var Pet = await _unitOfwork.Pets.GetAllAsync();
+            return _mapper.Map<List<PetDto>>(Pet);
         }
 
         [HttpGet("{id}")]
@@ -37,12 +37,12 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<PetDto>> Get(int id)
         {
-            var pet = await unitofwork.Pets.GetByIdAsync(id);
-            if (pet == null)
+            var Pet = await _unitOfwork.Pets.GetByIdAsync(id);
+            if (Pet == null)
             {
                 return NotFound();
             }
-            return this.mapper.Map<PetDto>(pet);
+            return this._mapper.Map<PetDto>(Pet);
         }
 
         [HttpGet]
@@ -51,41 +51,35 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<Pager<PetDto>>> GetPagination([FromQuery] Params Params)
         {
-            var (totalRecords, records) = await unitofwork.Pets.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
-            var listPet = mapper.Map<List<PetDto>>(records);
+            var (totalRecords, records) = await _unitOfwork.Pets.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
+            var listPet = _mapper.Map<List<PetDto>>(records);
             return new Pager<PetDto>(listPet, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<Pet>> Post(PetDto petDto)
+        public async Task<ActionResult> RegisterAsync(PetDto model)
         {
-            var pet = this.mapper.Map<Pet>(petDto);
-            this.unitofwork.Pets.Add(pet);
-            await unitofwork.SaveAsync();
-            if (pet == null)
-            {
-                return BadRequest();
-            }
-            petDto.Id = pet.Id;
-            return CreatedAtAction(nameof(Post), new { id = petDto.Id }, petDto);
+        var Pet = _mapper.Map<Pet>(model);
+        var result = await _unitOfwork.Pets.RegisterAsync(Pet);
+        return Ok(result);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<PetDto>> Put(int id, [FromBody]PetDto petDto)
+        public async Task<ActionResult<PetDto>> Put(int id, [FromBody]PetDto PetDto)
         {
-            if (petDto == null)
+            if (PetDto == null)
             {
                 return NotFound();
             }
-            var pet = this.mapper.Map<Pet>(petDto);
-            unitofwork.Pets.Update(pet);
-            await unitofwork.SaveAsync();
-            return petDto;
+            var Pet = this._mapper.Map<Pet>(PetDto);
+            _unitOfwork.Pets.Update(Pet);
+            await _unitOfwork.SaveAsync();
+            return PetDto;
         }
 
         [HttpDelete("{id}")]
@@ -93,13 +87,13 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            var pet = await unitofwork.Pets.GetByIdAsync(id);
-            if (pet == null)
+            var Pet = await _unitOfwork.Pets.GetByIdAsync(id);
+            if (Pet == null)
             {
                 return NotFound();
             }
-            unitofwork.Pets.Remove(pet);
-            await unitofwork.SaveAsync();
+            _unitOfwork.Pets.Remove(Pet);
+            await _unitOfwork.SaveAsync();
             return NoContent();
         }
     }

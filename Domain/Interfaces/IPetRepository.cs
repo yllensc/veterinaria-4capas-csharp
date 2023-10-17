@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IPetRepository : IGenericRepository<Pet>
     {
-        
+        Task<string> RegisterAsync(Pet model);
     }
 }
