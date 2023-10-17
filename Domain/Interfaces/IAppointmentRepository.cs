@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IAppointmentRepository : IGenericRepository<Appointment>
     {
-        
+        Task<string> RegisterAsync(Appointment model);
     }
 }

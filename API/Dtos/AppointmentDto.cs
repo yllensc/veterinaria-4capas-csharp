@@ -16,6 +16,5 @@ namespace API.Dtos
         public int IdPet {get; set;}
         public VeterinarianDto Veterinarian {get; set;}
         public int IdVeterinarian {get; set;}
-        public ICollection<TreatmentDto> Treatments {get; set;}
     }
 }

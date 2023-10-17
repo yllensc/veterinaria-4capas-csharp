@@ -12,12 +12,12 @@ namespace API.Controllers;
 [Authorize]
 public class AppointmentController : ApiBaseController
 {
-    private readonly IUnitOfWork unitofwork;
+    private readonly IUnitOfWork unitOfWork;
     private readonly  IMapper mapper;
 
-    public AppointmentController( IUnitOfWork unitofwork, IMapper mapper)
+    public AppointmentController( IUnitOfWork unitOfWork, IMapper mapper)
     {
-        this.unitofwork = unitofwork;
+        this.unitOfWork = unitOfWork;
         this.mapper = mapper;
     }
     [HttpGet]
@@ -26,7 +26,7 @@ public class AppointmentController : ApiBaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<IEnumerable<AppointmentDto>>> Get()
     {
-        var appointment = await unitofwork.Appointments.GetAllAsync();
+        var appointment = await unitOfWork.Appointments.GetAllAsync();
         return mapper.Map<List<AppointmentDto>>(appointment);
     }
 
@@ -36,7 +36,7 @@ public class AppointmentController : ApiBaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<AppointmentDto>> Get(int id)
     {
-        var appointment = await unitofwork.Appointments.GetByIdAsync(id);
+        var appointment = await unitOfWork.Appointments.GetByIdAsync(id);
         if (appointment == null){
             return NotFound();
         }
@@ -48,24 +48,18 @@ public class AppointmentController : ApiBaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<Pager<AppointmentDto>>> GetPagination([FromQuery] Params Params)
     {
-        var appointment = await unitofwork.Appointments.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
-        var listAppointment = mapper.Map<List<AppointmentDto>>(appointment.records);
-        return new Pager<AppointmentDto>(listAppointment, appointment.totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
+        var (totalRecords, records) = await unitOfWork.Appointments.GetAllAsync(Params.PageIndex, Params.PageSize, Params.Search);
+        var listAppointment = mapper.Map<List<AppointmentDto>>(records);
+        return new Pager<AppointmentDto>(listAppointment, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
     }
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Appointment>> Post(AppointmentDto appointmentDto)
+    public async Task<ActionResult> RegisterAsync(AppointmentDto model)
     {
-        var appointment = this.mapper.Map<Appointment>(appointmentDto);
-        this.unitofwork.Appointments.Add(appointment);
-        await unitofwork.SaveAsync();
-        if(appointment == null)
-        {
-            return BadRequest();
-        }
-        appointmentDto.Id = appointment.Id;
-        return CreatedAtAction(nameof(Post), new {id = appointmentDto.Id}, appointmentDto);
+        var appointment = mapper.Map<Appointment>(model);
+        var result = await unitOfWork.Appointments.RegisterAsync(appointment);
+        return Ok(result);
     }
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -78,21 +72,21 @@ public class AppointmentController : ApiBaseController
             return NotFound();
         }
         var appointment = this.mapper.Map<Appointment>(appointmentDto);
-        unitofwork.Appointments.Update(appointment);
-        await unitofwork.SaveAsync();
+        unitOfWork.Appointments.Update(appointment);
+        await unitOfWork.SaveAsync();
         return appointmentDto;
     }
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id){
-        var appointment = await unitofwork.Appointments.GetByIdAsync(id);
+        var appointment = await unitOfWork.Appointments.GetByIdAsync(id);
         if(appointment == null)
         {
             return NotFound();
         }
-        unitofwork.Appointments.Remove(appointment);
-        await unitofwork.SaveAsync();
+        unitOfWork.Appointments.Remove(appointment);
+        await unitOfWork.SaveAsync();
         return NoContent();
     }
 }

@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace API.Dtos
 {
-    public class VeterinarianDto
+    public class RaceDto
     {
         public int Id {get; set;}
         public string Name {get; set;}
-        public string PhoneNumber {get; set;}
-        public string Specialty {get; set;}
+        public SpecieDto Specie {get; set;}
+        public int IdSpecie {get; set;}
     }
 }

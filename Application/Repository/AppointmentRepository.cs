@@ -12,6 +12,52 @@ namespace Application.Repository;
     {
        _context = context;
     }
+    public async Task<string> RegisterAsync(Appointment model)
+{
+    // Verificar si la mascota (Pet) existe
+    var existingPet = _context.Pets
+        .Where(p => p.Id == model.IdPet)
+        .FirstOrDefault();
+
+    if (existingPet == null)
+    {
+        return "La mascota no existe en nuestro sistema";
+    }
+
+    // Verificar si el veterinario existe
+    var existingVeterinarian = _context.Veterinarians
+        .Where(v => v.Id == model.IdVeterinarian)
+        .FirstOrDefault();
+
+    if (existingVeterinarian == null)
+    {
+        return "El veterinario no existe en nuestro sistema";
+    }
+
+    // Crear la cita
+    var appointment = new Appointment
+    {
+        DateAppointment = model.DateAppointment,
+        Hour = model.Hour,
+        Cause = model.Cause,
+        Pet = existingPet, 
+        Veterinarian = existingVeterinarian,
+    };
+
+    try
+    {
+        _context.Appointments.Add(appointment);
+        await _context.SaveChangesAsync();
+
+        return $"Cita registrada con éxito";
+    }
+    catch (Exception ex)
+    {
+        var message = ex.Message;
+        return $"Error al registrar la cita: {message}";
+    }
+}
+
 
     public override async Task<IEnumerable<Appointment>> GetAllAsync()
     {

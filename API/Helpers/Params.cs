@@ -2,7 +2,6 @@ namespace API.Helpers;
 
 public class Params
 {
-    private int _month = 1;
     private int _pageSize = 5;
     private const int MaxPageSize = 50;
     private int _pageIndex = 1;
