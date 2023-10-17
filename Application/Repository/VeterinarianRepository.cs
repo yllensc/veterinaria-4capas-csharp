@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Repository;
@@ -11,4 +12,22 @@ namespace Application.Repository;
     {
        _context = context;
     }
+    public override async Task<(int totalRecords, IEnumerable<Veterinarian> records)> GetAllAsync(int pageIndex, int pageSize, string search)
+        {
+            var query = _context.Veterinarians as IQueryable<Veterinarian>;
+
+            if(!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => p.Name.ToLower().Contains(search));
+            }
+
+            query = query.OrderBy(p => p.Id);
+            var totalRecords = await query.CountAsync();
+            var records = await query 
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (totalRecords, records);
+        }
 }

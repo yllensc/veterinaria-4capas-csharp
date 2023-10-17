@@ -21,7 +21,7 @@ namespace Persistence
         public DbSet<Provider> Providers { get; set; }
         public DbSet<Race> Races { get; set; }
         public DbSet<Specie> Species { get; set; }
-        public DbSet<Treatment> Treatmentes { get; set; }
+        public DbSet<Treatment> Treatments { get; set; }
         public DbSet<TypeMovement> TypeMovements { get; set; }
         public DbSet<Veterinarian> Veterinarians { get; set; }  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
