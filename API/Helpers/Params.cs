@@ -24,9 +24,4 @@ public class Params
         get => _search;
         set => _search = (!String.IsNullOrEmpty(value)) ? value.ToLower() : "";
     }
-    public int Month
-    {
-        get => _month;
-        set => _month = (value <= 0 || value > 12) ? 1 : value;
-    }
 }

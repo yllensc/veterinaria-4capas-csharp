@@ -19,6 +19,25 @@ namespace Application.Repository;
             .Include(p => p.Pet)
             .ToListAsync();
     }
+    public override async Task<(int totalRecords, IEnumerable<Appointment> records)> GetAllAsync(int pageIndex, int pageSize, int search)
+    {
+        var query = _context.Appointments as IQueryable<Appointment>;
+
+        if (search != 0)
+        {
+            query = query.Where(p => p.IdVeterinarian == search);
+        }
+
+        query = query.OrderBy(p => p.Id);
+        var totalRecords = await query.CountAsync();
+        var records = await query
+            .Include(p => p.Pet)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRecords, records);
+    }
 
     public override async Task<Appointment> GetByIdAsync(int id)
     {
