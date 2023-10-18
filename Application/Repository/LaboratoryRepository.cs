@@ -12,6 +12,12 @@ namespace Application.Repository;
     {
        _context = context;
     }
+    public override async Task<IEnumerable<Laboratory>> GetAllAsync()
+    {
+        return await _context.Laboratories
+            .Include(p => p.Medicines)
+            .ToListAsync();
+    }
 
     public override async Task<Laboratory> GetByIdAsync(int id)
     {

@@ -12,4 +12,9 @@ namespace API.Dtos
         public string Address {get; set;}
         public string PhoneNumber {get; set;}
     }
+
+    public class LaboratoryWithMedicinesDto {
+        public string Name {get; set;}
+        public ICollection<MedicineDto> Medicines {get; set;}
+    }
 }

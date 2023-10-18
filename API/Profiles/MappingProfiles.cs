@@ -16,9 +16,12 @@ public class MappingProfiles : Profile
     {
         CreateMap<User, UserWithRolDto>()
         .ForMember(dest => dest.RolName, opt => opt.MapFrom(src => src.Roles.FirstOrDefault().Name));
-       CreateMap<Appointment,AppointmentDto>().ReverseMap();
+        CreateMap<Appointment,AppointmentDto>().ReverseMap();
         CreateMap<Specie,SpecieDto>().ReverseMap();
         CreateMap<Laboratory,LaboratoryDto>().ReverseMap();
+        CreateMap<Laboratory,LaboratoryWithMedicinesDto>()
+        .ForMember(dest => dest.Medicines, opt => opt.MapFrom(src => src.Medicines.FirstOrDefault()))
+        .ReverseMap();
         CreateMap<Pet,PetDto>().ReverseMap();
         CreateMap<Medicine,MedicineDto>().ReverseMap();
         CreateMap<MedicineMovement,MedicineMovementDto>().ReverseMap();
