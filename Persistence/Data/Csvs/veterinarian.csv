@@ -1,0 +1,7 @@
+Id,IdUser,Name,PhoneNumber,Specialty
+1,1,Veterinario1,1234443311,Cirugía
+2,2,Veterinario2,1234443322,Dermatología
+3,3,Veterinario3,1234443333,Oftalmología
+4,4,Veterinario4,1234443344,Cirugía vascular
+5,5,Veterinario5,1234443355,Cirugía vascular
+6,6,Veterinario6,1234443366,Cardiología

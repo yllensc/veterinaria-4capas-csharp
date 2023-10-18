@@ -96,30 +96,30 @@ namespace Persistence
                     context.TypeMovements.AddRange(typeMovements);
                     await context.SaveChangesAsync();
                 }
-                if (!context.Appointments.Any())
+                if (!context.Veterinarians.Any())
                 {
-                    using (var readerAppointment = new StreamReader("../Persistence/Data/Csvs/appointment.csv"))
+                    using (var readerVeterinarian = new StreamReader("../Persistence/Data/Csvs/veterinarian.csv"))
                     {
-                        using (var csv = new CsvReader(readerAppointment, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        using (var csv = new CsvReader(readerVeterinarian, new CsvConfiguration(CultureInfo.InvariantCulture)
                         {
                             HeaderValidated = null, // Esto deshabilita la validación de encabezados
                             MissingFieldFound = null
                         }))
                         {
-                            var appointmentList = csv.GetRecords<Appointment>();
-                            List<Appointment> appointments = new List<Appointment>();
-                            foreach (var appointment in appointmentList)
+                            var veterinarianList = csv.GetRecords<Veterinarian>();
+                            List<Veterinarian> veterinarians = new List<Veterinarian>();
+                            foreach (var veterinarian in veterinarianList)
                             {
-                                appointments.Add(new Appointment
+                                veterinarians.Add(new Veterinarian
                                 {
-                                    DateAppointment = appointment.DateAppointment,
-                                    Hour = appointment.Hour,
-                                    Cause = appointment.Cause,
-                                    IdPet = appointment.IdPet,
-                                    IdVeterinarian = appointment.IdVeterinarian
+                                    Name = veterinarian.Name,
+                                    PhoneNumber = veterinarian.PhoneNumber,
+                                    Specialty = veterinarian.Specialty,
+                                    IdUser = veterinarian.IdUser
+
                                 });
                             }
-                            context.Appointments.AddRange(appointments);
+                            context.Veterinarians.AddRange(veterinarians);
                             await context.SaveChangesAsync();
                         }
                     }
@@ -135,34 +135,6 @@ namespace Persistence
                     };
                     context.Laboratories.AddRange(laboratories);
                     await context.SaveChangesAsync();
-                }
-                if (!context.Medicines.Any())
-                {
-                    using (var readerMedicine = new StreamReader("../Persistence/Data/Csvs/medicine.csv"))
-                    {
-                        using (var csv = new CsvReader(readerMedicine, new CsvConfiguration(CultureInfo.InvariantCulture)
-                        {
-                            HeaderValidated = null, // Esto deshabilita la validación de encabezados
-                            MissingFieldFound = null
-                        }))
-                        {
-                            var medicineList = csv.GetRecords<Medicine>();
-                            List<Medicine> medicines = new List<Medicine>();
-                            foreach (var medicine in medicineList)
-                            {
-                                medicines.Add(new Medicine
-                                {
-                                    Name = medicine.Name,
-                                    QuantityDisp = medicine.QuantityDisp,
-                                    Price = medicine.Price,
-                                    IdLaboratory = medicine.IdLaboratory,
-                                    IdProvider = medicine.IdProvider
-                                });
-                            }
-                            context.Medicines.AddRange(medicines);
-                            await context.SaveChangesAsync();
-                        }
-                    }
                 }
                 if (!context.Owners.Any())
                 {
@@ -186,6 +158,81 @@ namespace Persistence
                                 });
                             }
                             context.Owners.AddRange(owners);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
+                if (!context.Providers.Any())
+                {
+                    using (var readerProvider = new StreamReader("../Persistence/Data/Csvs/provider.csv"))
+                    {
+                        using (var csv = new CsvReader(readerProvider, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HeaderValidated = null, // Esto deshabilita la validación de encabezados
+                            MissingFieldFound = null
+                        }))
+                        {
+                            var providerList = csv.GetRecords<Provider>();
+                            List<Provider> providers = new List<Provider>();
+                            foreach (var provider in providerList)
+                            {
+                                providers.Add(new Provider
+                                {
+                                    Name = provider.Name,
+                                    Address = provider.Address,
+                                    PhoneNumber = provider.PhoneNumber,
+                                });
+                            }
+                            context.Providers.AddRange(providers);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
+                if (!context.Species.Any())
+                {
+                    using (var readerSpecie = new StreamReader("../Persistence/Data/Csvs/specie.csv"))
+                    {
+                        using (var csv = new CsvReader(readerSpecie, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HeaderValidated = null, // Esto deshabilita la validación de encabezados
+                            MissingFieldFound = null
+                        }))
+                        {
+                            var specieList = csv.GetRecords<Specie>();
+                            List<Specie> species = new List<Specie>();
+                            foreach (var specie in specieList)
+                            {
+                                species.Add(new Specie
+                                {
+                                    Name = specie.Name,
+                                });
+                            }
+                            context.Species.AddRange(species);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
+                if (!context.Races.Any())
+                {
+                    using (var readerRace = new StreamReader("../Persistence/Data/Csvs/race.csv"))
+                    {
+                        using (var csv = new CsvReader(readerRace, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HeaderValidated = null, // Esto deshabilita la validación de encabezados
+                            MissingFieldFound = null
+                        }))
+                        {
+                            var raceList = csv.GetRecords<Race>();
+                            List<Race> races = new List<Race>();
+                            foreach (var race in raceList)
+                            {
+                                races.Add(new Race
+                                {
+                                    Name = race.Name,
+                                    IdSpecie = race.IdSpecie
+                                });
+                            }
+                            context.Races.AddRange(races);
                             await context.SaveChangesAsync();
                         }
                     }
@@ -218,77 +265,58 @@ namespace Persistence
                         }
                     }
                 }
-                if (!context.Providers.Any())
+                if (!context.Medicines.Any())
                 {
-                    using (var readerProvider = new StreamReader("../Persistence/Data/Csvs/provider.csv"))
+                    using (var readerMedicine = new StreamReader("../Persistence/Data/Csvs/medicine.csv"))
                     {
-                        using (var csv = new CsvReader(readerProvider, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        using (var csv = new CsvReader(readerMedicine, new CsvConfiguration(CultureInfo.InvariantCulture)
                         {
                             HeaderValidated = null, // Esto deshabilita la validación de encabezados
                             MissingFieldFound = null
                         }))
                         {
-                            var providerList = csv.GetRecords<Provider>();
-                            List<Provider> providers = new List<Provider>();
-                            foreach (var provider in providerList)
+                            var medicineList = csv.GetRecords<Medicine>();
+                            List<Medicine> medicines = new List<Medicine>();
+                            foreach (var medicine in medicineList)
                             {
-                                providers.Add(new Provider
+                                medicines.Add(new Medicine
                                 {
-                                    Name = provider.Name,
-                                    Address = provider.Address,
-                                    PhoneNumber = provider.PhoneNumber,
+                                    Name = medicine.Name,
+                                    QuantityDisp = medicine.QuantityDisp,
+                                    Price = medicine.Price,
+                                    IdLaboratory = medicine.IdLaboratory,
+                                    IdProvider = medicine.IdProvider
                                 });
                             }
-                            context.Providers.AddRange(providers);
+                            context.Medicines.AddRange(medicines);
                             await context.SaveChangesAsync();
                         }
                     }
                 }
-                if (!context.Races.Any())
+                if (!context.Appointments.Any())
                 {
-                    using (var readerRace = new StreamReader("../Persistence/Data/Csvs/race.csv"))
+                    using (var readerAppointment = new StreamReader("../Persistence/Data/Csvs/appointment.csv"))
                     {
-                        using (var csv = new CsvReader(readerRace, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        using (var csv = new CsvReader(readerAppointment, new CsvConfiguration(CultureInfo.InvariantCulture)
                         {
                             HeaderValidated = null, // Esto deshabilita la validación de encabezados
                             MissingFieldFound = null
                         }))
                         {
-                            var raceList = csv.GetRecords<Race>();
-                            List<Race> races = new List<Race>();
-                            foreach (var race in raceList)
+                            var appointmentList = csv.GetRecords<Appointment>();
+                            List<Appointment> appointments = new List<Appointment>();
+                            foreach (var appointment in appointmentList)
                             {
-                                races.Add(new Race
+                                appointments.Add(new Appointment
                                 {
-                                    Name = race.Name,
-                                    IdSpecie = race.IdSpecie
+                                    DateAppointment = appointment.DateAppointment,
+                                    Hour = appointment.Hour,
+                                    Cause = appointment.Cause,
+                                    IdPet = appointment.IdPet,
+                                    IdVeterinarian = appointment.IdVeterinarian
                                 });
                             }
-                            context.Races.AddRange(races);
-                            await context.SaveChangesAsync();
-                        }
-                    }
-                }
-                if (!context.Species.Any())
-                {
-                    using (var readerSpecie = new StreamReader("../Persistence/Data/Csvs/specie.csv"))
-                    {
-                        using (var csv = new CsvReader(readerSpecie, new CsvConfiguration(CultureInfo.InvariantCulture)
-                        {
-                            HeaderValidated = null, // Esto deshabilita la validación de encabezados
-                            MissingFieldFound = null
-                        }))
-                        {
-                            var specieList = csv.GetRecords<Specie>();
-                            List<Specie> species = new List<Specie>();
-                            foreach (var specie in specieList)
-                            {
-                                species.Add(new Specie
-                                {
-                                    Name = specie.Name,
-                                });
-                            }
-                            context.Species.AddRange(species);
+                            context.Appointments.AddRange(appointments);
                             await context.SaveChangesAsync();
                         }
                     }
@@ -321,6 +349,7 @@ namespace Persistence
                         }
                     }
                 }
+                
             }
             catch (Exception ex)
             {

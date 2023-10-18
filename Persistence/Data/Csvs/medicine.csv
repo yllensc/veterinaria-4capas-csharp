@@ -1,0 +1,11 @@
+Id,Name,QuantityDisp,Price,IdLaboratory,IdProvider
+1,Ampicilina 500mg,1000,8.99,1,1
+2,Ivermectina 1% Inyectable,500,15.75,2,2
+3,Rimadyl 100mg,200,25.50,3,3
+4,Clavulanic Acid 125mg,800,12.99,1,4
+5,Ceftriaxona 250mg,600,18.25,2,3
+6,Fenbendazol 10%,300,9.50,4,1
+7,Enrofloxacina 50mg,750,22.99,3,2
+8,Metronidazol 250mg,400,14.75,4,4
+9,Carprofen 100mg,300,21.99,2,1
+10,Levamisol 10% Solución Oral,500,11.50,1,3
