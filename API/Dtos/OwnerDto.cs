@@ -12,4 +12,8 @@ namespace API.Dtos
         public string Email {get; set;}
         public string PhoneNumber {get; set;}
     }
+
+    public class OwnerWithPetsDto : OwnerDto{
+        public ICollection<PetsBasicDto> Pets {get; set;}
+    }
 }

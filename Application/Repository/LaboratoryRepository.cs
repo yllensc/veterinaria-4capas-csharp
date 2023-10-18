@@ -24,4 +24,14 @@ namespace Application.Repository;
         return await _context.Laboratories
         .FirstOrDefaultAsync(p =>  p.Id == id);
     }
+
+    public async Task<Laboratory> GetMedicines(string laboratory)
+    {
+        var medicinesByLaboratory = _context.Laboratories
+                                    .Include(l => l.Medicines)
+                                    .Where(l => l.Name.ToLower() == laboratory.ToLower())
+                                    .FirstOrDefaultAsync();
+        return await medicinesByLaboratory;
+    }
+
 }

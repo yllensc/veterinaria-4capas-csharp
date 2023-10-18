@@ -34,7 +34,7 @@ namespace Application.Repository;
     public async Task<IEnumerable<Veterinarian>> GetCardiovascularSurgeonAsync()
     {
         return await _context.Veterinarians
-                            .Where(p => p.Specialty.ToLower() == "cirujano vascular")
+                            .Where(p => p.Specialty.ToLower() == "cirugía vascular")
                             .ToListAsync();
     }
 }

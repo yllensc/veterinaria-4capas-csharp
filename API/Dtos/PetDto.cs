@@ -17,4 +17,10 @@ namespace API.Dtos
         public RaceDto Race {get; set;}
         public int IdRace {get; set;}
     }
+
+    public class PetsBasicDto{
+        public string Name {get; set;}
+        public DateTime BirthDate {get; set;}
+        public int IdOwner {get; set;}
+    }
 }

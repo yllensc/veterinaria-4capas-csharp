@@ -17,4 +17,10 @@ namespace API.Dtos
         public VeterinarianDto Veterinarian {get; set;}
         public int IdVeterinarian {get; set;}
     }
+
+    public class AppointmentWithPets{
+        public DateOnly DateAppointment {get; set;}
+        public string PetName {get; set;}
+        public int IdPet {get; set;}
+    }
 }

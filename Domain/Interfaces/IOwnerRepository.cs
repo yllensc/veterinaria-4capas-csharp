@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IOwnerRepository : IGenericRepository<Owner>
     {
-        
+        Task<IEnumerable<Owner>> GetAllWithPetsAsync();
     }
 }

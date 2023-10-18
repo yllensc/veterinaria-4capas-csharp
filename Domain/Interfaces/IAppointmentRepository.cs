@@ -9,5 +9,7 @@ namespace Domain.Interfaces
     public interface IAppointmentRepository : IGenericRepository<Appointment>
     {
         Task<string> RegisterAsync(Appointment model);
+        Task<IEnumerable<Appointment>> GetPetsByAppointmentEspecific(string cause, int quarter, int year);
+
     }
 }

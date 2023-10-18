@@ -15,6 +15,6 @@ namespace API.Dtos
 
     public class LaboratoryWithMedicinesDto {
         public string Name {get; set;}
-        public ICollection<MedicineDto> Medicines {get; set;}
+        public ICollection<MedicineBasicDto> Medicines {get; set;}
     }
 }

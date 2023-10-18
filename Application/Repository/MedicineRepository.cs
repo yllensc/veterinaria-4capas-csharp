@@ -27,4 +27,12 @@ namespace Application.Repository;
         .Include(p => p.Provider)
         .FirstOrDefaultAsync(p =>  p.Id == id);
     }
+
+    public async Task<IEnumerable<Medicine>> GetUnderCant(int cant)
+    {
+        return await _context.Medicines
+                    .Include(d => d.Provider)
+                    .Where(m => m.QuantityDisp < cant)
+                    .ToListAsync();
+    }
 }

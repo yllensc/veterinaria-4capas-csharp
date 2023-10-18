@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IMedicineRepository : IGenericRepository<Medicine>
     {
-        
+        Task<IEnumerable<Medicine>> GetUnderCant(int cant);
     }
 }

@@ -29,18 +29,70 @@ namespace API.Controllers;
             }
             return this._mapper.Map<List<VeterinarianDto>>(veterinarians);
         }
-        //[HttpGet("medicineBy{laboratory}")]
-        //[MapToApiVersion("1.0")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //public async Task<ActionResult<LaboratoryWithMedicinesDto>> Get2(string laboratory)
-        //{
-        //    var laboratories = await _unitOfwork.Laboratories.GetMedicines();
-        //    if (laboratories == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return this._mapper.Map<LaboratoryWithMedicinesDto>(laboratories);
-        //}
+        [HttpGet("medicineBy{laboratory}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<LaboratoryWithMedicinesDto>> Get2(string laboratory)
+        {
+            var laboratories = await _unitOfwork.Laboratories.GetMedicines(laboratory);
+            if (laboratories == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<LaboratoryWithMedicinesDto>(laboratories);
+        }
+        [HttpGet("petsBySpecie{specie}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<SpecieWithPetsDto>> Get3(string specie)
+        {
+            var species = await _unitOfwork.Species.GetPets(specie);
+            if (species == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<SpecieWithPetsDto>(species);
+        }
+        [HttpGet("ownersWithPets")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<OwnerWithPetsDto>>> Get4()
+        {
+            var owners = await _unitOfwork.Owners.GetAllWithPetsAsync();
+            if (owners == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<OwnerWithPetsDto>>(owners);
+        }
+        [HttpGet("medicineWithLessThan{cant}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<MedicineBasicDto>>> Get5(int cant)
+        {
+            var medicines = await _unitOfwork.Medicines.GetUnderCant(cant);
+            if (medicines == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<MedicineBasicDto>>(medicines);
+        }
+        [HttpGet("petsOn{year}On{quarter}for{cause}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<AppointmentWithPets>>> Get6(string cause, int quarter, int year)
+        {
+            var appointments = await _unitOfwork.Appointments.GetPetsByAppointmentEspecific(cause, quarter, year);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<AppointmentWithPets>>(appointments);
+        }
 
     }

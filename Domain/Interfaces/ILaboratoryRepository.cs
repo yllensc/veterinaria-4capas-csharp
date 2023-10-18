@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface ILaboratoryRepository : IGenericRepository<Laboratory>
     {
-        
+        Task<Laboratory> GetMedicines(string laboratory);
     }
 }

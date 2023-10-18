@@ -16,4 +16,10 @@ namespace API.Dtos
         public ProviderDto Provider {get; set;}
         public int IdProvider {get; set;}
     }
+
+    public class MedicineBasicDto {
+        public int Id {get; set;}
+        public string Name {get; set;}
+        public int QuantityDisp {get; set;}
+    }
 }

@@ -90,4 +90,15 @@ public class AppointmentRepository : GenericRepository<Appointment>, IAppointmen
             .Include(p => p.Pet)
         .FirstOrDefaultAsync(p => p.Id == id);
     }
+
+    public async Task<IEnumerable<Appointment>> GetPetsByAppointmentEspecific(string cause, int quarter, int year)
+    {
+        var petsByAppointments = await _context.Appointments
+                                .Include(a=>a.Pet)
+                                .Where(appointment => appointment.Cause.ToLower().Equals(cause.ToLower())
+                                && appointment.DateAppointment.Year == year
+                                && ((appointment.DateAppointment.Month - 1) / 3 + 1) == quarter)
+                                .ToListAsync();
+        return  petsByAppointments;
+    }
 }

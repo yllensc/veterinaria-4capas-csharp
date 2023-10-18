@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Repository;
@@ -11,6 +12,7 @@ namespace Application.Repository;
     {
        _context = context;
     }
+
     public async Task<string> RegisterAsync(Pet model)
     {
         var existingOwner = _context.Owners
@@ -62,4 +64,5 @@ namespace Application.Repository;
             return $"Error al registrar la cita: {message}";
         }
     }
+    
 }

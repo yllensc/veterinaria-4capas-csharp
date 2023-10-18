@@ -8,6 +8,6 @@ namespace Domain.Interfaces
 {
     public interface ISpecieRepository : IGenericRepository<Specie>
     {
-        
+        Task<Specie> GetPets(string specie);
     }
 }
