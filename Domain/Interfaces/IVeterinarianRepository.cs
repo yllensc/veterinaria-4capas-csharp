@@ -8,5 +8,6 @@ namespace Domain.Interfaces
 {
     public interface IVeterinarianRepository : IGenericRepository<Veterinarian>
     {
+        Task<IEnumerable<Veterinarian>> GetCardiovascularSurgeonAsync();
     }
 }
