@@ -22,4 +22,7 @@ namespace API.Dtos
         public string Name {get; set;}
         public int QuantityDisp {get; set;}
     }
+    public class MedicineJustProvidersDto{
+        public ProviderDto Provider {get; set;}
+    }
 }

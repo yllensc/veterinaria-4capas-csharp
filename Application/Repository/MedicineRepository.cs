@@ -35,4 +35,12 @@ namespace Application.Repository;
                     .Where(m => m.QuantityDisp < cant)
                     .ToListAsync();
     }
+    public async Task<IEnumerable<Medicine>> GetProvidersWithXMedicine(string medicine){
+        var providers = await _context.Medicines
+                        .Include(m => m.Provider)
+                        .Where(p => p.Name.ToLower().Equals(medicine.ToLower()))
+                        .ToListAsync();
+        return providers;
+
+    }
 }

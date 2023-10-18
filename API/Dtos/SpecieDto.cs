@@ -14,4 +14,8 @@ namespace API.Dtos
     public class SpecieWithPetsDto : SpecieDto{
         public ICollection<PetsBasicDto> Pets {get; set;}
     }
+    public class SpeciesAllWithPetsDto {
+        public string Name {get; set;}
+        public ICollection<PetsBasicDto> Pets {get; set;}
+    }
 }

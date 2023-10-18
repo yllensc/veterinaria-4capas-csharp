@@ -22,5 +22,13 @@ namespace API.Dtos
         public string Name {get; set;}
         public DateTime BirthDate {get; set;}
         public int IdOwner {get; set;}
+        public string RaceName {get; set;}
+    }
+        public class PetsBasicWithOwnerDto{
+        public string Name {get; set;}
+        public DateTime BirthDate {get; set;}
+        public int IdOwner {get; set;}
+        public string OwnerName {get; set;}
+        public string RaceName {get; set;}
     }
 }

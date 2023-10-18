@@ -9,5 +9,6 @@ namespace Domain.Interfaces
     public interface ISpecieRepository : IGenericRepository<Specie>
     {
         Task<Specie> GetPets(string specie);
+        Task<IEnumerable<Specie>> GetPetsInGroups();
     }
 }

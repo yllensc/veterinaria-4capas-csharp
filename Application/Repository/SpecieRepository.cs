@@ -21,4 +21,11 @@ namespace Application.Repository;
                         .FirstOrDefaultAsync();
         return petsBySpecie;
     }
+    public async Task<IEnumerable<Specie>> GetPetsInGroups(){
+        var species = await _context.Species
+                    .Include(s => s.Pets)
+                    .Include(s => s.Races)
+                    .ToListAsync();
+        return species;
+    }
 }

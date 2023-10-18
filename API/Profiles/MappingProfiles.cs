@@ -24,14 +24,26 @@ public class MappingProfiles : Profile
         CreateMap<Specie,SpecieWithPetsDto>()
         .ForMember(dest => dest.Pets, opt => opt.MapFrom(src => src.Pets))
         .ReverseMap();
+        CreateMap<Specie,SpeciesAllWithPetsDto>()
+        .ForMember(dest => dest.Pets, opt => opt.MapFrom(src => src.Pets))
+        .ReverseMap();
         CreateMap<Laboratory,LaboratoryDto>().ReverseMap();
         CreateMap<Laboratory, LaboratoryWithMedicinesDto>()
         .ForMember(dest => dest.Medicines, opt => opt.MapFrom(src => src.Medicines))
         .ReverseMap();
         CreateMap<Pet,PetDto>().ReverseMap();
-        CreateMap<Pet,PetsBasicDto>().ReverseMap();
+        CreateMap<Pet,PetsBasicDto>()
+        .ForMember(dest => dest.RaceName, origen=> origen.MapFrom(origen => origen.Race.Name))
+        .ReverseMap();
+        CreateMap<Pet,PetsBasicWithOwnerDto>()
+        .ForMember(dest => dest.OwnerName, origen=> origen.MapFrom(origen => origen.Owner.Name))
+        .ForMember(dest => dest.RaceName, origen=> origen.MapFrom(origen => origen.Race.Name))
+        .ReverseMap();
         CreateMap<Medicine,MedicineDto>().ReverseMap();
         CreateMap<Medicine,MedicineBasicDto>().ReverseMap();
+        CreateMap<Medicine,MedicineJustProvidersDto>()
+        .ForMember(dest => dest.Provider, opt => opt.MapFrom(src => src.Provider))
+        .ReverseMap();
         CreateMap<MedicineMovement,MedicineMovementDto>().ReverseMap();
         CreateMap<Owner,OwnerDto>().ReverseMap();
         CreateMap<Owner,OwnerWithPetsDto>()

@@ -101,4 +101,13 @@ public class AppointmentRepository : GenericRepository<Appointment>, IAppointmen
                                 .ToListAsync();
         return  petsByAppointments;
     }
+    public async Task<IEnumerable<Appointment>> GetPetsOnAppointmentWithVeterinarianX(int IdVeterinarian)
+    {
+        var petsByAppointments = await _context.Appointments
+                                .Include(a=>a.Pet)
+                                .Include(a=>a.Veterinarian)
+                                .Where(appointment => appointment.IdVeterinarian == IdVeterinarian)
+                                .ToListAsync();
+        return  petsByAppointments;
+    }
 }

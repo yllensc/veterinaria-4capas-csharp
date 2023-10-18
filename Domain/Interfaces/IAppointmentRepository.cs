@@ -10,6 +10,7 @@ namespace Domain.Interfaces
     {
         Task<string> RegisterAsync(Appointment model);
         Task<IEnumerable<Appointment>> GetPetsByAppointmentEspecific(string cause, int quarter, int year);
+        Task<IEnumerable<Appointment>> GetPetsOnAppointmentWithVeterinarianX(int IdVeterinarian);
 
     }
 }

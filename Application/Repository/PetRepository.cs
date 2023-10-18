@@ -64,5 +64,12 @@ namespace Application.Repository;
             return $"Error al registrar la cita: {message}";
         }
     }
-    
+    public async Task<IEnumerable<Pet>> GetPetsWithXRace(string race){
+        var pets = await _context.Pets
+                    .Include(p=>p.Race)
+                    .Include(p=>p.Owner)
+                    .Where(p=>p.Race.Name.ToLower().Equals(race.ToLower()))
+                    .ToListAsync();
+        return pets;
+    }
 }

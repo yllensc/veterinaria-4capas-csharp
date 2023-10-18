@@ -8,6 +8,7 @@ namespace Domain.Interfaces
 {
     public interface IMedicineMovementRepository : IGenericRepository<MedicineMovement>
     {
-        
+        Task<string> RegisterAsync(MedicineMovement model);
+        Task<IEnumerable<object>> GetListMovements();
     }
 }
