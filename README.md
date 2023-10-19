@@ -5,7 +5,7 @@ Backend de una veterinaria para gestión administrativa con CSharp a través de 
 ## Comenzando 🚀
 
 El proyecto de desarrollo de software tiene como objetivo principal la creación de un sistema de administración para una veterinaria. Este sistema permitirá a los administradores y al personal de la veterinaria gestionar de manera eficiente y efectiva todas las actividades relacionadas con la atención de mascotas y la gestión de clientes.
-#Requerimientos funcionales
+## Requerimientos funcionales
 1. Autenticación y autorización:
     - El sistema debe implementar protección en los endpoints utilizando JWT (JSON Web Tokens). El token tiene una duracion de 1 minuto.
     - Se debe implementar refresh token.
@@ -15,7 +15,7 @@ El proyecto de desarrollo de software tiene como objetivo principal la creación
 4. El backend debe permitir realizar la paginacion en  las peticiones get de todos los controladores.
 5. Los controladores deben implementar 2 versiones diferentes (Query y Header)
 
-#EndPoints requeridos
+## EndPoints requeridos
 1.  Crear un consulta que permita visualizar los veterinarios cuya especialidad sea Cirujano vascular.
 2.  Listar los medicamentos que pertenezcan a el laboratorio Genfar
 3.  Mostrar las mascotas que se encuentren registradas cuya especie sea felina.
