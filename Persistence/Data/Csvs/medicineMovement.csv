@@ -1,0 +1,5 @@
+Id,Quantity,DateMovement,PriceUnit,IdMedicine,IdTypeMovement
+1,35,2023-01-10,15.50,1,1
+2,20,2023-02-15,10.25,2,2
+3,38,2023-03-20,5.75,3,1
+4,25,2023-04-05,12.80,4,2
