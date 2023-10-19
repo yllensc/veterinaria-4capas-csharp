@@ -122,29 +122,29 @@ El ratelimit define la cantidad de peticiones permitidas en el tiempo y sobrepas
 
 ## Endpoints ✌️🤘🆗😺🦝🐶🦄
 Los endpoints son de tipo GET, por lo que todos cuentan con su versión 1.0 y 1.1, para los ejemplos, las consultas se van a presentar con diferentes versiones:
-1. ``` http://localhost:5223/api/Veterinarian/cardiovascularSurgeonVeterinarian ```
+1. ``` http://localhost:5223/api/Veterinarian/cardiovascularSurgeonVeterinarian ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/19ae4e83-72f8-4e87-88f4-641c86c4c2fe)
-2. ``` http://localhost:5223/api/Laboratory/medicineByGenfar ```
+2. ``` http://localhost:5223/api/Laboratory/medicineByGenfar ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/ad86673a-2369-4949-aeb8-ca1c504da58a)
-3. ``` http://localhost:5223/api/Specie/petsBySpecieGato ```
+3. ``` http://localhost:5223/api/Specie/petsBySpecieGato ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/e0b5aebf-102f-4960-a268-d636dceb92b0)
-4. ``` http://localhost:5223/api/Owner/ownersWithPets ```
+4. ``` http://localhost:5223/api/Owner/ownersWithPets ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b19bf23b-2920-4b77-9c49-3a21a282a055)
-5. ``` http://localhost:5223/api/Medicine/medicineWithLessThan600?search=Fenbendazol 10%  ```
+5. ``` http://localhost:5223/api/Medicine/medicineWithLessThan600?search=Fenbendazol 10%  ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/bce49249-9a45-4a58-be9d-9fa5706139e4)
-6. ``` http://localhost:5223/api/Appointment/petsOn2023On4forHerida en la pata ```
+6. ``` http://localhost:5223/api/Appointment/petsOn2023On4forHerida en la pata ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/85e57941-6124-4a5b-8677-70159aa0f623)
-7. ``` http://localhost:5223/api/Specie/speciesOnGroups?search=Perro ```
+7. ``` http://localhost:5223/api/Specie/speciesOnGroups?search=Perro ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/a795c917-ef30-44a2-a3f2-8d44df1025d9)
-8. ``` http://localhost:5223/api/MedicineMovement/listMovementsWithTotal ```
+8. ``` http://localhost:5223/api/MedicineMovement/listMovementsWithTotal ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/18a99874-88f1-4ca6-8ecf-f6f0a8abee89)
-9. ``` http://localhost:5223/api/Appointment/petsCaredByVeterinarian2?search=Daisy ```
+9. ``` http://localhost:5223/api/Appointment/petsCaredByVeterinarian2?search=Daisy ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/1cb26e09-3e43-4905-be9b-064ee306295c)
-10. ``` http://localhost:5223/api/Medicine/providerWithThisAmpicilina 500mg ```
+10. ``` http://localhost:5223/api/Medicine/providerWithThisAmpicilina 500mg ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b1f2a240-150e-47c0-96de-8501d263f7f2)
-11. ``` http://localhost:5223/api/Pet/petsWithThisBudgerigar ```
+11. ``` http://localhost:5223/api/Pet/petsWithThisBudgerigar ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b540321a-a498-4a41-9732-2b04d32ca4b2)
-12. ``` http://localhost:5223/api/Pet/countPetsByRace ```
+12. ``` http://localhost:5223/api/Pet/countPetsByRace ``` <br>
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/f4bbfa9c-887c-402a-800e-340c276bdcc8)
 
 
