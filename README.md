@@ -112,19 +112,31 @@ El ratelimit define la cantidad de peticiones permitidas en el tiempo y sobrepas
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/f9f831e4-1564-4db6-9172-1f22f0673b0c)
 
 ## Endpoints ✌️🤘🆗😺🦝🐶🦄
-
-1. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/19ae4e83-72f8-4e87-88f4-641c86c4c2fe)
-2. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/ad86673a-2369-4949-aeb8-ca1c504da58a)
-3. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/e0b5aebf-102f-4960-a268-d636dceb92b0)
-4. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b19bf23b-2920-4b77-9c49-3a21a282a055)
-5. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/bce49249-9a45-4a58-be9d-9fa5706139e4)
-6. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/85e57941-6124-4a5b-8677-70159aa0f623)
-7. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/a795c917-ef30-44a2-a3f2-8d44df1025d9)
-8. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/18a99874-88f1-4ca6-8ecf-f6f0a8abee89)
-9. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/1cb26e09-3e43-4905-be9b-064ee306295c)
-10. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b1f2a240-150e-47c0-96de-8501d263f7f2)
-11. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b540321a-a498-4a41-9732-2b04d32ca4b2)
-12. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/f4bbfa9c-887c-402a-800e-340c276bdcc8)
+Los endpoints son de tipo GET, por lo que todos cuentan con su versión 1.0 y 1.1, para los ejemplos, las consultas se van a presentar con diferentes versiones:
+1. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/19ae4e83-72f8-4e87-88f4-641c86c4c2fe)
+2. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/ad86673a-2369-4949-aeb8-ca1c504da58a)
+3. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/e0b5aebf-102f-4960-a268-d636dceb92b0)
+4. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b19bf23b-2920-4b77-9c49-3a21a282a055)
+5. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/bce49249-9a45-4a58-be9d-9fa5706139e4)
+6. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/85e57941-6124-4a5b-8677-70159aa0f623)
+7. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/a795c917-ef30-44a2-a3f2-8d44df1025d9)
+8. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/18a99874-88f1-4ca6-8ecf-f6f0a8abee89)
+9. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/1cb26e09-3e43-4905-be9b-064ee306295c)
+10. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b1f2a240-150e-47c0-96de-8501d263f7f2)
+11. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b540321a-a498-4a41-9732-2b04d32ca4b2)
+12. ``` ```
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/f4bbfa9c-887c-402a-800e-340c276bdcc8)
 
 
 
