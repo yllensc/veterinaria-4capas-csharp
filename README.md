@@ -86,7 +86,8 @@ Método: ```POST```
 <br>
 Body:
 ```{ "UserName": "veterinario2","Role": "Veterinarian","Name": "juana banana","PhoneNumber": "3019284930","Specialty": "aves"}```
-## Autorizaciones
+## Autenticación y autorización
+## Cruds
 ## Versionado y paginado
 ## RateLimit
 ## Endpoints ✌️🤘🆗😺🦝🐶🦄
