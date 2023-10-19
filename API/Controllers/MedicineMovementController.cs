@@ -9,7 +9,7 @@ namespace API.Controllers
 {
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
-    [Authorize]
+    [Authorize (Roles = "Administrator")]
     public class MedicineMovementController : ApiBaseController
     {
         private readonly IUnitOfWork _unitOfwork;
