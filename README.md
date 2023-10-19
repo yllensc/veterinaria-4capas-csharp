@@ -35,6 +35,11 @@ El proyecto de desarrollo de software tiene como objetivo principal la creación
 - .NET 7.0
 - MySQL
 
+### Estructura de la base de datos 
+
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/c634220e-1dbd-4517-a082-e7103e2a0e2f)
+
+
 ### Instalación 🔧
 
 Migración de la base de datos (code-first migration):
