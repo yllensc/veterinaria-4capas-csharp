@@ -87,7 +87,19 @@ Método: ```POST```
 Body:
 ```{ "UserName": "veterinario2","Role": "Veterinarian","Name": "juana banana","PhoneNumber": "3019284930","Specialty": "aves"}```
 ## Autenticación y autorización
+Para este ejercicio, creé 3 roles, Administrator, Veterinarian, WithOutRole. Casi todas las peticiones HTTP autorizan a los usuarios, y hay peticiones en particular con restricciones por role. Por ejemplo, los veterinarios no tienen acceso a sus propios datos ni a los medicamentos y su respectiva gestión de compra y venta, para esas peticiones solo tienen permiso los admi.
+
+### (Forbidden)
+#### Ejemplo de un usuario con role de veterinario intentando acceder a sus propios datos:
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/6e84a912-2999-48fb-ade0-c16543e675a1)
+
+### (Unuthorized)
+#### Ejemplo de un usuario con permiso pero con el token vencido:
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/fc39621d-526d-4257-bd34-0b0a1db2c93c)
+
+
 ## Cruds
+Las entidades que lo requieren tienen la implementación del CRUD, accediento a cada controller a través del nombre de la entidad y claramente de acuerdo a la solicitud cambian los parámetros de los POST.
 ## Versionado y paginado
 ## RateLimit
 ## Endpoints ✌️🤘🆗😺🦝🐶🦄
