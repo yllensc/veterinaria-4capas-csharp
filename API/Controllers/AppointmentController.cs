@@ -96,5 +96,54 @@ namespace API.Controllers
             await _unitOfwork.SaveAsync();
             return NoContent();
         }
+        //Endpoints
+        [HttpGet("petsOn{year}On{quarter}for{cause}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<AppointmentWithPets>>> Get6(string cause, int quarter, int year)
+        {
+            var appointments = await _unitOfwork.Appointments.GetPetsByAppointmentEspecific(cause, quarter, year);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<AppointmentWithPets>>(appointments);
+        }
+        [HttpGet("petsOn{year}On{quarter}for{cause}")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<AppointmentWithPets>>> GetPaginationEnd6([FromQuery] Params Params, string cause, int quarter, int year)
+        {
+            var (totalRecords, records) = await _unitOfwork.Appointments.GetPetsByAppointmentEspecific(cause, quarter, year, Params.PageIndex, Params.PageSize, Params.Search);
+            var listAppointment = _mapper.Map<List<AppointmentWithPets>>(records);
+            return new Pager<AppointmentWithPets>(listAppointment, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
+
+        }
+        [HttpGet("petsCaredByVeterinarian{IdVeterinarian}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<AppointmentWithPets>>> Get9(int IdVeterinarian)
+        {
+            var appointments = await _unitOfwork.Appointments.GetPetsOnAppointmentWithVeterinarianX(IdVeterinarian);
+            if (appointments == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<AppointmentWithPets>>(appointments);
+        }
+        [HttpGet("petsCaredByVeterinarian{IdVeterinarian}")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<AppointmentWithPets>>> GetPaginationEnd9([FromQuery] Params Params, int IdVeterinarian)
+        {
+            var (totalRecords, records) = await _unitOfwork.Appointments.GetPetsOnAppointmentWithVeterinarianX(IdVeterinarian, Params.PageIndex, Params.PageSize, Params.Search);
+            var listAppointment = _mapper.Map<List<AppointmentWithPets>>(records);
+            return new Pager<AppointmentWithPets>(listAppointment, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
+
+        }
     }
 }

@@ -76,7 +76,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<OwnerDto>> Put(int id, [FromBody]OwnerDto OwnerDto)
+        public async Task<ActionResult<OwnerDto>> Put(int id, [FromBody] OwnerDto OwnerDto)
         {
             if (OwnerDto == null)
             {
@@ -101,6 +101,31 @@ namespace API.Controllers
             _unitOfwork.Owners.Remove(Owner);
             await _unitOfwork.SaveAsync();
             return NoContent();
+        }
+        //Endpoints
+        [HttpGet("ownersWithPets")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<OwnerWithPetsDto>>> Get4()
+        {
+            var owners = await _unitOfwork.Owners.GetAllWithPetsAsync();
+            if (owners == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<OwnerWithPetsDto>>(owners);
+        }
+
+        [HttpGet("ownersWithPets")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<OwnerWithPetsDto>>> GetPaginationEnd4([FromQuery] Params Params)
+        {
+            var (totalRecords, records) = await _unitOfwork.Owners.GetAllWithPetsAsync(Params.PageIndex, Params.PageSize, Params.Search);
+            var listOwner = _mapper.Map<List<OwnerWithPetsDto>>(records);
+            return new Pager<OwnerWithPetsDto>(listOwner, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
         }
     }
 }

@@ -76,7 +76,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<LaboratoryDto>> Put(int id, [FromBody]LaboratoryDto LaboratoryDto)
+        public async Task<ActionResult<LaboratoryDto>> Put(int id, [FromBody] LaboratoryDto LaboratoryDto)
         {
             if (LaboratoryDto == null)
             {
@@ -101,6 +101,30 @@ namespace API.Controllers
             _unitOfwork.Laboratories.Remove(Laboratory);
             await _unitOfwork.SaveAsync();
             return NoContent();
+        }
+        //Endpoints
+        [HttpGet("medicineBy{laboratory}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<LaboratoryWithMedicinesDto>> Get2(string laboratory)
+        {
+            var laboratories = await _unitOfwork.Laboratories.GetMedicines(laboratory);
+            if (laboratories == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<LaboratoryWithMedicinesDto>(laboratories);
+        }
+        [HttpGet("medicineBy{laboratory}")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<LaboratoryWithMedicinesDto>>> GetPaginationEnd2([FromQuery] Params Params, string laboratory)
+        {
+            var (totalRecords, records) = await _unitOfwork.Laboratories.GetMedicines(laboratory, Params.PageIndex, Params.PageSize, Params.Search);
+            var listLaboratory = _mapper.Map<List<LaboratoryWithMedicinesDto>>(records);
+            return new Pager<LaboratoryWithMedicinesDto>(listLaboratory, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
         }
     }
 }

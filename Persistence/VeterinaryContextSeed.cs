@@ -293,6 +293,35 @@ namespace Persistence
                         }
                     }
                 }
+                if (!context.MedicineMovements.Any())
+                {
+                    using (var readerMedicineMovement = new StreamReader("../Persistence/Data/Csvs/medicineMovement.csv"))
+                    {
+                        using (var csv = new CsvReader(readerMedicineMovement, new CsvConfiguration(CultureInfo.InvariantCulture)
+                        {
+                            HeaderValidated = null, // Esto deshabilita la validación de encabezados
+                            MissingFieldFound = null
+                        }))
+                        {
+                            var medicineMovementList = csv.GetRecords<MedicineMovement>();
+                            List<MedicineMovement> medicineMovements = new List<MedicineMovement>();
+                            foreach (var medicineMovement in medicineMovementList)
+                            {
+                                medicineMovements.Add(new MedicineMovement
+                                {
+
+                                    Quantity = medicineMovement.Quantity,
+                                    DateMovement = medicineMovement.DateMovement,
+                                    PriceUnit = medicineMovement.PriceUnit,
+                                    IdMedicine = medicineMovement.IdMedicine,
+                                    IdTypeMovement = medicineMovement.IdTypeMovement
+                                });
+                            }
+                            context.MedicineMovements.AddRange(medicineMovements);
+                            await context.SaveChangesAsync();
+                        }
+                    }
+                }
                 if (!context.Appointments.Any())
                 {
                     using (var readerAppointment = new StreamReader("../Persistence/Data/Csvs/appointment.csv"))

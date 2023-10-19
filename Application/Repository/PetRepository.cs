@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Repository;
-    public class PetRepository: GenericRepository<Pet>, IPetRepository
+public class PetRepository : GenericRepository<Pet>, IPetRepository
 {
     private readonly VeterinaryDbContext _context;
 
     public PetRepository(VeterinaryDbContext context) : base(context)
     {
-       _context = context;
+        _context = context;
     }
 
     public async Task<string> RegisterAsync(Pet model)
@@ -64,17 +64,48 @@ namespace Application.Repository;
             return $"Error al registrar la cita: {message}";
         }
     }
-    public async Task<IEnumerable<Pet>> GetPetsWithXRace(string race){
+    public override async Task<IEnumerable<Pet>> GetAllAsync()
+    {
+        return await _context.Pets
+            .Include(p => p.Owner)
+            .Include(p => p.Specie)
+            .Include(p => p.Race)
+            .ToListAsync();
+    }
+    public override async Task<(int totalRecords, IEnumerable<Pet> records)> GetAllAsync(int pageIndex, int pageSize, string search)
+    {
+        var query = _context.Pets as IQueryable<Pet>;
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => p.Name == search);
+        }
+
+        query = query.OrderBy(p => p.Id);
+        var totalRecords = await query.CountAsync();
+        var records = await query
+            .Include(p => p.Owner)
+            .Include(p => p.Specie)
+            .Include(p => p.Race)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRecords, records);
+    }
+    public async Task<IEnumerable<Pet>> GetPetsWithXRace(string race)
+    {
         var pets = await _context.Pets
-                    .Include(p=>p.Race)
-                    .Include(p=>p.Owner)
-                    .Where(p=>p.Race.Name.ToLower().Equals(race.ToLower()))
+                    .Include(p => p.Race)
+                    .Include(p => p.Owner)
+                    .Where(p => p.Race.Name.ToLower().Equals(race.ToLower()))
                     .ToListAsync();
         return pets;
     }
-    public async Task<IEnumerable<object>> GetPetsByRace(){
+    public async Task<IEnumerable<object>> GetPetsByRace()
+    {
         var pets = await _context.Pets
-                    .Include(p=>p.Race)
+                    .Include(p => p.Race)
                     .GroupBy(g => g.Race.Name)
                              .Select(u => new
                              {
@@ -83,6 +114,52 @@ namespace Application.Repository;
                              })
                     .ToListAsync();
         return pets;
-        
+
     }
+    public async Task<(int totalRecords, IEnumerable<Pet> records)> GetPetsWithXRace(string race, int pageIndex, int pageSize, string search)
+    {
+        var query = _context.Pets as IQueryable<Pet>;
+
+        if (!String.IsNullOrEmpty(race))
+        {
+            query = query.Where(p => p.Race.Name == race);
+        }
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => p.Name == search);
+        }
+
+        query = query.OrderBy(p => p.Id);
+        var totalRecords = await query.CountAsync();
+        var records = await query
+            .Include(p => p.Race)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRecords, records);
+    }
+    public async Task<(int totalRecords, IEnumerable<object> records)> GetPetsByRace(int pageIndex, int pageSize, string search)
+    {
+        var query = _context.Pets as IQueryable<Pet>;
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => p.Race.Name == search);
+        }
+
+        query = query.OrderBy(p => p.Id);
+
+        var totalRecords = await query.CountAsync();
+
+        var pets = await query
+            .Include(p => p.Race)
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRecords, pets);
+    }
+
 }

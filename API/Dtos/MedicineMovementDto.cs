@@ -11,9 +11,7 @@ namespace API.Dtos
         public int Quantity {get; set;}
         public DateTime DateMovement {get; set;}
         public double PriceUnit {get; set;}
-        public MedicineDto Medicine {get; set;}
-        public int IdMedicine {get; set;}
-        public TypeMovementDto TypeMovement {get; set;}
-        public int IdTypeMovement {get; set;}
+        public string MedicineName {get; set;}
+        public string Movement {get; set;}
     }
 }

@@ -76,7 +76,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<RaceDto>> Put(int id, [FromBody]RaceDto RaceDto)
+        public async Task<ActionResult<RaceDto>> Put(int id, [FromBody] RaceDto RaceDto)
         {
             if (RaceDto == null)
             {

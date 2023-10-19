@@ -10,5 +10,9 @@ namespace Domain.Interfaces
     {
         Task<string> RegisterAsync(MedicineMovement model);
         Task<IEnumerable<object>> GetListMovements();
+        Task<(int totalRecords, IEnumerable<object> records)> GetListMovements(int pageIndex, int pageSize, string search);
+
+
+
     }
 }

@@ -76,7 +76,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TypeMovementDto>> Put(int id, [FromBody]TypeMovementDto TypeMovementDto)
+        public async Task<ActionResult<TypeMovementDto>> Put(int id, [FromBody] TypeMovementDto TypeMovementDto)
         {
             if (TypeMovementDto == null)
             {

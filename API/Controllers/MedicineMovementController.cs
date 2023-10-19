@@ -61,16 +61,16 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> RegisterAsync(MedicineMovementDto model)
         {
-        var medicineMovement = _mapper.Map<MedicineMovement>(model);
-        var result = await _unitOfwork.MedicineMovements.RegisterAsync(medicineMovement);
-        return Ok(result);
+            var medicineMovement = _mapper.Map<MedicineMovement>(model);
+            var result = await _unitOfwork.MedicineMovements.RegisterAsync(medicineMovement);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<MedicineMovementDto>> Put(int id, [FromBody]MedicineMovementDto MedicineMovementDto)
+        public async Task<ActionResult<MedicineMovementDto>> Put(int id, [FromBody] MedicineMovementDto MedicineMovementDto)
         {
             if (MedicineMovementDto == null)
             {
@@ -95,6 +95,30 @@ namespace API.Controllers
             _unitOfwork.MedicineMovements.Remove(MedicineMovement);
             await _unitOfwork.SaveAsync();
             return NoContent();
+        }
+        //Endpoints
+        [HttpGet("listMovementsWithTotal")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Get8()
+        {
+            var movements = await _unitOfwork.MedicineMovements.GetListMovements();
+            if (movements == null)
+            {
+                return NotFound();
+            }
+            return Ok(movements);
+        }
+        [HttpGet("listMovementsWithTotal")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<object>>> GetPaginationEnd8([FromQuery] Params Params)
+        {
+            var (totalRecords, records) = await _unitOfwork.MedicineMovements.GetListMovements(Params.PageIndex, Params.PageSize, Params.Search);
+            var listMedicineMovement = _mapper.Map<List<object>>(records);
+            return new Pager<object>(listMedicineMovement, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
         }
     }
 }

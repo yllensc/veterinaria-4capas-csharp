@@ -25,7 +25,7 @@ public class UserController : ApiBaseController
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
-        [HttpPost("register")]
+    [HttpPost("register")]
     public async Task<ActionResult> RegisterAsync(RegisterDto model)
     {
         var result = await _userService.RegisterAsync(model);
@@ -82,5 +82,5 @@ public class UserController : ApiBaseController
         };
         Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
     }
-    
+
 }

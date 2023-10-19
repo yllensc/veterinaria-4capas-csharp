@@ -76,7 +76,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<TreatmentDto>> Put(int id, [FromBody]TreatmentDto TreatmentDto)
+        public async Task<ActionResult<TreatmentDto>> Put(int id, [FromBody] TreatmentDto TreatmentDto)
         {
             if (TreatmentDto == null)
             {

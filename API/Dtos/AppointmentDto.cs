@@ -12,7 +12,7 @@ namespace API.Dtos
         public DateOnly DateAppointment {get; set;}
         public TimeSpan Hour {get; set;}
         public string Cause {get; set;}
-        public PetDto Pet {get; set;}
+        public PetsBasicDto Pet {get; set;}
         public int IdPet {get; set;}
         public VeterinarianDto Veterinarian {get; set;}
         public int IdVeterinarian {get; set;}

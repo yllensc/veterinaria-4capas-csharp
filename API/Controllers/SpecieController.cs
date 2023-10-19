@@ -76,7 +76,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<SpecieDto>> Put(int id, [FromBody]SpecieDto SpecieDto)
+        public async Task<ActionResult<SpecieDto>> Put(int id, [FromBody] SpecieDto SpecieDto)
         {
             if (SpecieDto == null)
             {
@@ -102,5 +102,54 @@ namespace API.Controllers
             await _unitOfwork.SaveAsync();
             return NoContent();
         }
+
+        //Endpoints
+        [HttpGet("petsBySpecie{specie}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<SpecieWithPetsDto>> Get3(string specie)
+        {
+            var species = await _unitOfwork.Species.GetPets(specie);
+            if (species == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<SpecieWithPetsDto>(species);
+        }
+        [HttpGet("petsBySpecie{specie}")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<SpecieWithPetsDto>>> GetPaginationEnd3([FromQuery] Params Params, string specie)
+        {
+            var (totalRecords, records) = await _unitOfwork.Species.GetPets(specie, Params.PageIndex, Params.PageSize, Params.Search);
+            var listSpecie = _mapper.Map<List<SpecieWithPetsDto>>(records);
+            return new Pager<SpecieWithPetsDto>(listSpecie, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
+        }
+        [HttpGet("speciesOnGroups")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<SpeciesAllWithPetsDto>>> Get7()
+        {
+            var species = await _unitOfwork.Species.GetPetsInGroups();
+            if (species == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<SpeciesAllWithPetsDto>>(species);
+        }
+        [HttpGet("speciesOnGroups")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<SpeciesAllWithPetsDto>>> GetPaginationEnd7([FromQuery] Params Params)
+        {
+            var (totalRecords, records) = await _unitOfwork.Species.GetPetsInGroups(Params.PageIndex, Params.PageSize, Params.Search);
+            var listSpecie = _mapper.Map<List<SpeciesAllWithPetsDto>>(records);
+            return new Pager<SpeciesAllWithPetsDto>(listSpecie, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
+        }
+
     }
 }

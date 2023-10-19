@@ -56,8 +56,6 @@ public class AppointmentRepository : GenericRepository<Appointment>, IAppointmen
             return $"Error al registrar la cita: {message}";
         }
     }
-
-
     public override async Task<IEnumerable<Appointment>> GetAllAsync()
     {
         return await _context.Appointments
@@ -76,39 +74,77 @@ public class AppointmentRepository : GenericRepository<Appointment>, IAppointmen
         query = query.OrderBy(p => p.Id);
         var totalRecords = await query.CountAsync();
         var records = await query
-            .Include(p => p.Pet).ThenInclude(P=>P.Owner)
+            .Include(p => p.Pet)
             .Include(P => P.Veterinarian)
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
-
         return (totalRecords, records);
     }
-
     public override async Task<Appointment> GetByIdAsync(int id)
     {
         return await _context.Appointments
             .Include(p => p.Pet)
         .FirstOrDefaultAsync(p => p.Id == id);
     }
-
     public async Task<IEnumerable<Appointment>> GetPetsByAppointmentEspecific(string cause, int quarter, int year)
     {
         var petsByAppointments = await _context.Appointments
-                                .Include(a=>a.Pet)
+                                .Include(a => a.Pet)
                                 .Where(appointment => appointment.Cause.ToLower().Equals(cause.ToLower())
                                 && appointment.DateAppointment.Year == year
                                 && ((appointment.DateAppointment.Month - 1) / 3 + 1) == quarter)
                                 .ToListAsync();
-        return  petsByAppointments;
+        return petsByAppointments;
     }
     public async Task<IEnumerable<Appointment>> GetPetsOnAppointmentWithVeterinarianX(int IdVeterinarian)
     {
         var petsByAppointments = await _context.Appointments
-                                .Include(a=>a.Pet)
-                                .Include(a=>a.Veterinarian)
+                                .Include(a => a.Pet)
+                                .Include(a => a.Veterinarian)
                                 .Where(appointment => appointment.IdVeterinarian == IdVeterinarian)
                                 .ToListAsync();
-        return  petsByAppointments;
+        return petsByAppointments;
     }
+    public async Task<(int totalRecords, IEnumerable<Appointment> records)> GetPetsByAppointmentEspecific(string cause, int quarter, int year, int pageIndex, int pageSize, string search)
+    {
+        var query = _context.Appointments as IQueryable<Appointment>;
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            query = query.Where(p => p.Pet.Name.Contains(search));
+        }
+        query = query.OrderBy(p => p.Id);
+        var totalRecords = await query.CountAsync();
+        var petsByAppointments = await _context.Appointments
+                                .Include(a => a.Pet)
+                                .Where(appointment => appointment.Cause.ToLower().Equals(cause.ToLower())
+                                && appointment.DateAppointment.Year == year
+                                && ((appointment.DateAppointment.Month - 1) / 3 + 1) == quarter)
+                                .ToListAsync();
+        return (totalRecords, petsByAppointments);
+    }
+    public async Task<(int totalRecords, IEnumerable<Appointment> records)> GetPetsOnAppointmentWithVeterinarianX(int IdVeterinarian, int pageIndex, int pageSize, string search)
+    {
+        var query = _context.Appointments
+            .Include(a => a.Pet)
+            .Include(a => a.Veterinarian)
+            .Where(appointment => appointment.IdVeterinarian == IdVeterinarian);
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            query = query.Where(appointment => appointment.Pet.Name.Contains(search));
+        }
+
+        query = query.OrderBy(appointment => appointment.Id);
+
+        var totalRecords = await query.CountAsync();
+        var petsByAppointments = await query
+            .Skip((pageIndex - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (totalRecords, petsByAppointments);
+    }
+
 }

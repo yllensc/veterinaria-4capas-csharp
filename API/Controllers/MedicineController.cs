@@ -76,7 +76,7 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<MedicineDto>> Put(int id, [FromBody]MedicineDto MedicineDto)
+        public async Task<ActionResult<MedicineDto>> Put(int id, [FromBody] MedicineDto MedicineDto)
         {
             if (MedicineDto == null)
             {
@@ -101,6 +101,53 @@ namespace API.Controllers
             _unitOfwork.Medicines.Remove(Medicine);
             await _unitOfwork.SaveAsync();
             return NoContent();
+        }
+        //Enpoints
+        [HttpGet("medicineWithLessThan{cant}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<MedicineBasicDto>>> Get5(int cant)
+        {
+            var medicines = await _unitOfwork.Medicines.GetUnderCant(cant);
+            if (medicines == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<MedicineBasicDto>>(medicines);
+        }
+        [HttpGet("medicineWithLessThan{cant}")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<MedicineBasicDto>>> GetPaginationEnd5([FromQuery] Params Params, int cant)
+        {
+            var (totalRecords, records) = await _unitOfwork.Medicines.GetUnderCant(cant, Params.PageIndex, Params.PageSize, Params.Search);
+            var listMedicine = _mapper.Map<List<MedicineBasicDto>>(records);
+            return new Pager<MedicineBasicDto>(listMedicine, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
+        }
+        [HttpGet("providerWithThis{medicine}")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<MedicineJustProvidersDto>>> Get10(string medicine)
+        {
+            var medicines = await _unitOfwork.Medicines.GetProvidersWithXMedicine(medicine);
+            if (medicines == null)
+            {
+                return NotFound();
+            }
+            return this._mapper.Map<List<MedicineJustProvidersDto>>(medicines);
+        }
+        [HttpGet("providerWithThis{medicine}")]
+        [MapToApiVersion("1.1")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<Pager<MedicineJustProvidersDto>>> GetPaginationEnd10([FromQuery] Params Params, string medicine)
+        {
+            var (totalRecords, records) = await _unitOfwork.Medicines.GetProvidersWithXMedicine(medicine, Params.PageIndex, Params.PageSize, Params.Search);
+            var listMedicine = _mapper.Map<List<MedicineJustProvidersDto>>(records);
+            return new Pager<MedicineJustProvidersDto>(listMedicine, totalRecords, Params.PageIndex, Params.PageSize, Params.Search);
         }
     }
 }

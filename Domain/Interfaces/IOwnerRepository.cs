@@ -9,5 +9,7 @@ namespace Domain.Interfaces
     public interface IOwnerRepository : IGenericRepository<Owner>
     {
         Task<IEnumerable<Owner>> GetAllWithPetsAsync();
+        Task<(int totalRecords, IEnumerable<Owner> records)> GetAllWithPetsAsync(int pageIndex, int pageSize, string search);
+
     }
 }
