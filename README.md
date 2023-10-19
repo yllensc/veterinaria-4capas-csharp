@@ -86,8 +86,10 @@ Método: ```POST```
 <br>
 Body:
 ```{ "UserName": "veterinario2","Role": "Veterinarian","Name": "juana banana","PhoneNumber": "3019284930","Specialty": "aves"}```
-
-Endpoints ✌️🤘🆗😺🦝🐶🦄
+## Autorizaciones
+## Versionado y paginado
+## RateLimit
+## Endpoints ✌️🤘🆗😺🦝🐶🦄
 
 1. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/19ae4e83-72f8-4e87-88f4-641c86c4c2fe)
 2. ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/ad86673a-2369-4949-aeb8-ca1c504da58a)
