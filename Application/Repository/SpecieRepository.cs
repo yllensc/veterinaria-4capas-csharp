@@ -18,7 +18,7 @@ public class SpecieRepository : GenericRepository<Specie>, ISpecieRepository
 
         if (!String.IsNullOrEmpty(search))
         {
-            query = query.Where(p => p.Name == search);
+            query = query.Where(p => p.Name.Contains(search));
         }
 
         query = query.OrderBy(p => p.Id);
@@ -34,6 +34,7 @@ public class SpecieRepository : GenericRepository<Specie>, ISpecieRepository
     {
         var petsBySpecie = await _context.Species
                         .Include(s => s.Pets)
+                        .Include(s => s.Races)
                         .Where(s => s.Name.ToLower().Equals(specie.ToLower()))
                         .FirstOrDefaultAsync();
         return petsBySpecie;
@@ -44,13 +45,14 @@ public class SpecieRepository : GenericRepository<Specie>, ISpecieRepository
 
         if (!String.IsNullOrEmpty(search))
         {
-            query = query.Where(p => p.Name == search);
+            query = query.Where(p => p.Name.Contains(search));
         }
 
         query = query.OrderBy(p => p.Id);
         var totalRecords = await query.CountAsync();
         var records = await query
                         .Include(s => s.Pets)
+                        .Include(s => s.Races)
                         .Where(s => s.Name.ToLower().Equals(specie.ToLower()))
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
@@ -68,23 +70,24 @@ public class SpecieRepository : GenericRepository<Specie>, ISpecieRepository
     }
 
     public async Task<(int totalRecords, IEnumerable<Specie> records)> GetPetsInGroups(int pageIndex, int pageSize, string search)
+{
+    var query = _context.Species.AsQueryable();
+
+    if (!string.IsNullOrEmpty(search))
     {
-        var query = _context.Species as IQueryable<Specie>;
-
-        if (!String.IsNullOrEmpty(search))
-        {
-            query = query.Where(p => p.Name == search);
-        }
-
-        query = query.OrderBy(p => p.Id);
-        var totalRecords = await query.CountAsync();
-        var species = await _context.Species
-                    .Include(s => s.Pets)
-                    .Include(s => s.Races)
-            .Skip((pageIndex - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync();
-
-        return (totalRecords, species);
+        query = query.Where(p => p.Name.Contains(search));
     }
+
+    query = query.OrderBy(p => p.Id);
+    var totalRecords = await query.CountAsync();
+    var species = await query
+        .Include(s => s.Pets)
+        .Include(s => s.Races)
+        .Skip((pageIndex - 1) * pageSize)
+        .Take(pageSize)
+        .ToListAsync();
+
+    return (totalRecords, species);
+}
+
 }

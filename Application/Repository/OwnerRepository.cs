@@ -33,14 +33,14 @@ public class OwnerRepository : GenericRepository<Owner>, IOwnerRepository
     public async Task<IEnumerable<Owner>> GetAllWithPetsAsync()
     {
         var OwnerWithPets = _context.Owners
-                            .Include(o => o.Pets)
+                            .Include(o => o.Pets).ThenInclude(p=>p.Race)
                             .ToListAsync();
         return await OwnerWithPets;
     }
 
     public async Task<(int totalRecords, IEnumerable<Owner> records)> GetAllWithPetsAsync(int pageIndex, int pageSize, string search)
     {
-        var query = _context.Owners.Include(o => o.Pets) as IQueryable<Owner>;
+        var query = _context.Owners.Include(o => o.Pets).ThenInclude(p=>p.Race) as IQueryable<Owner>;
 
         if (!String.IsNullOrEmpty(search))
         {
