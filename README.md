@@ -101,6 +101,10 @@ Para este ejercicio, creé 3 roles, Administrator, Veterinarian, WithOutRole. Ca
 ## Cruds
 Las entidades que lo requieren tienen la implementación del CRUD, accediento a cada controller a través del nombre de la entidad y claramente de acuerdo a la solicitud cambian los parámetros de los POST.
 ## Versionado y paginado
+La implementación de versiones se implementaron en las peticiones tipo GET, tando de los CRUD como de los endpoints, y cobra relevancia en los gets que retornan listas.
+Es decir, si accedes a los GET tal cual a través de la ruta del endpoint, estás accediento a la versión por defecto (1.0). Ahora bien, para probar la versión 1.1, tienes que indicar en los headers la key: X-Version con su value en 1.1 y si quieres jugar con los parámetros de paginado y filtro, opcional puedes cambiar el pageIndex, pageSize o search (que puede ser tipo int o string, de acuerdo a la utilidad en cada endpoint) en el query de la solicitud, algo así:
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/5916bf3d-0cdf-41c4-ac93-29b8ad338f45)
+
 ## RateLimit
 ## Endpoints ✌️🤘🆗😺🦝🐶🦄
 
