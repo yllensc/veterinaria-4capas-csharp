@@ -160,5 +160,18 @@ namespace API.Controllers;
             }
             return this._mapper.Map<List<PetsBasicWithOwnerDto>>(pets);
         }
+        [HttpGet("countPetsByRace")]
+        [MapToApiVersion("1.0")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult> Get12()
+        {
+            var pets = await _unitOfwork.Pets.GetPetsByRace();
+            if (pets == null)
+            {
+                return NotFound();
+            }
+            return Ok(pets);
+        }
 
     }

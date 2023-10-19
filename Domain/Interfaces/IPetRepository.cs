@@ -10,5 +10,6 @@ namespace Domain.Interfaces
     {
         Task<string> RegisterAsync(Pet model);
         Task<IEnumerable<Pet>> GetPetsWithXRace(string race);
+        Task<IEnumerable<object>> GetPetsByRace();
     }
 }

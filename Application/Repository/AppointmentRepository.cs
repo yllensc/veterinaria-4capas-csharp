@@ -64,19 +64,20 @@ public class AppointmentRepository : GenericRepository<Appointment>, IAppointmen
             .Include(p => p.Pet)
             .ToListAsync();
     }
-    public override async Task<(int totalRecords, IEnumerable<Appointment> records)> GetAllAsync(int pageIndex, int pageSize, int search)
+    public override async Task<(int totalRecords, IEnumerable<Appointment> records)> GetAllAsync(int pageIndex, int pageSize, string search)
     {
         var query = _context.Appointments as IQueryable<Appointment>;
 
-        if (search != 0)
+        if (!String.IsNullOrEmpty(search))
         {
-            query = query.Where(p => p.IdVeterinarian == search);
+            query = query.Where(p => p.Veterinarian.Name == search);
         }
 
         query = query.OrderBy(p => p.Id);
         var totalRecords = await query.CountAsync();
         var records = await query
-            .Include(p => p.Pet)
+            .Include(p => p.Pet).ThenInclude(P=>P.Owner)
+            .Include(P => P.Veterinarian)
             .Skip((pageIndex - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

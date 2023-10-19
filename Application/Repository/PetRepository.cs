@@ -72,4 +72,17 @@ namespace Application.Repository;
                     .ToListAsync();
         return pets;
     }
+    public async Task<IEnumerable<object>> GetPetsByRace(){
+        var pets = await _context.Pets
+                    .Include(p=>p.Race)
+                    .GroupBy(g => g.Race.Name)
+                             .Select(u => new
+                             {
+                                 NameRace = u.Key,
+                                 TotalPets = _context.Pets.Count()
+                             })
+                    .ToListAsync();
+        return pets;
+        
+    }
 }
