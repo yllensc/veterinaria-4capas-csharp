@@ -100,6 +100,15 @@ Para este ejercicio, creé 3 roles, Administrator, Veterinarian, WithOutRole. Ca
 
 ## Cruds
 Las entidades que lo requieren tienen la implementación del CRUD, accediento a cada controller a través del nombre de la entidad y claramente de acuerdo a la solicitud cambian los parámetros de los POST.
+### Ejemplo para Appointment del CRUD
+#### GET 
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/2e62ccdd-1f55-4d73-b005-770b6444c88a)
+#### POST
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/005ba64f-8afb-4ad2-b75c-2ea275639497)
+#### PUT
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/27bec93c-fbd4-4977-be27-f50922d83eca)
+#### DELETE
+![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/021f5324-687f-4767-9090-f50b92bf6bef)
 ## Versionado y paginado
 La implementación de versiones se implementaron en las peticiones tipo GET, tanto de los CRUD como de los endpoints, y cobra relevancia en los gets que retornan listas.
 
@@ -113,29 +122,29 @@ El ratelimit define la cantidad de peticiones permitidas en el tiempo y sobrepas
 
 ## Endpoints ✌️🤘🆗😺🦝🐶🦄
 Los endpoints son de tipo GET, por lo que todos cuentan con su versión 1.0 y 1.1, para los ejemplos, las consultas se van a presentar con diferentes versiones:
-1. ``` ```
+1. ``` http://localhost:5223/api/Veterinarian/cardiovascularSurgeonVeterinarian ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/19ae4e83-72f8-4e87-88f4-641c86c4c2fe)
-2. ``` ```
+2. ``` http://localhost:5223/api/Laboratory/medicineByGenfar ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/ad86673a-2369-4949-aeb8-ca1c504da58a)
-3. ``` ```
+3. ``` http://localhost:5223/api/Specie/petsBySpecieGato ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/e0b5aebf-102f-4960-a268-d636dceb92b0)
-4. ``` ```
+4. ``` http://localhost:5223/api/Owner/ownersWithPets ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b19bf23b-2920-4b77-9c49-3a21a282a055)
-5. ``` ```
+5. ``` http://localhost:5223/api/Medicine/medicineWithLessThan600?search=Fenbendazol 10%  ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/bce49249-9a45-4a58-be9d-9fa5706139e4)
-6. ``` ```
+6. ``` http://localhost:5223/api/Appointment/petsOn2023On4forHerida en la pata ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/85e57941-6124-4a5b-8677-70159aa0f623)
-7. ``` ```
+7. ``` http://localhost:5223/api/Specie/speciesOnGroups?search=Perro ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/a795c917-ef30-44a2-a3f2-8d44df1025d9)
-8. ``` ```
+8. ``` http://localhost:5223/api/MedicineMovement/listMovementsWithTotal ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/18a99874-88f1-4ca6-8ecf-f6f0a8abee89)
-9. ``` ```
+9. ``` http://localhost:5223/api/Appointment/petsCaredByVeterinarian2?search=Daisy ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/1cb26e09-3e43-4905-be9b-064ee306295c)
-10. ``` ```
+10. ``` http://localhost:5223/api/Medicine/providerWithThisAmpicilina 500mg ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b1f2a240-150e-47c0-96de-8501d263f7f2)
-11. ``` ```
+11. ``` http://localhost:5223/api/Pet/petsWithThisBudgerigar ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/b540321a-a498-4a41-9732-2b04d32ca4b2)
-12. ``` ```
+12. ``` http://localhost:5223/api/Pet/countPetsByRace ```
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/f4bbfa9c-887c-402a-800e-340c276bdcc8)
 
 
