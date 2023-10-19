@@ -54,6 +54,9 @@ Al terminar, como es un proyecto local de momento, obtienes la información del 
 ![image](https://github.com/yllensc/veterinaria-4capas-csharp/assets/117176562/4fcda1fd-d1b6-41f9-9e29-3125dac99651)
 
 ## Ejecutando las pruebas ⚙️
+### Ojito 👀:
+El proyecto tiene una colección de postman con la petición del token que caduca cada 2 minutos, los 12 endpoints del requerimiento y un CRUD de prueba para Appointment.
+Aquí ➡️: [CollectionPostman](https://github.com/yllensc/veterinaria-4capas-csharp/blob/main/VeterinarianEndpoints.postman_collection)
 ### User 👨‍💻💁‍♂️💁‍♀️:
 #### 1. Register <br>
 Endpoint: ```http://localhost:5223/api/User/register```
