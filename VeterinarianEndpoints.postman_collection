@@ -1,0 +1,675 @@
+{
+	"info": {
+		"_postman_id": "1ab54579-ae07-427d-a4f7-65817d4b2036",
+		"name": "campus",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22338533"
+	},
+	"item": [
+		{
+			"name": "Veterinary",
+			"item": [
+				{
+					"name": "token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Parsea la respuesta JSON\r",
+									"var responseJson = pm.response.json();\r",
+									"\r",
+									"// Obtiene el token de la respuesta\r",
+									"var token = responseJson.token;\r",
+									"\r",
+									"// Almacena el token en una variable global\r",
+									"pm.globals.set(\"tokenV\", token);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"UserName\": \"usuarioAdmi7\",\r\n  \"Rol\": \"Administrator\",\r\n  \"Password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5223/api/User/Token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"User",
+								"Token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end1CardiovascularSurgeonVeterinarian",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Veterinarian/cardiovascularSurgeonVeterinarian",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Veterinarian",
+								"cardiovascularSurgeonVeterinarian"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end2MedicineBylaboratory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Laboratory/medicineByGenfar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Laboratory",
+								"medicineByGenfar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end3petsBySpecie",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Specie/petsBySpecieGato",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Specie",
+								"petsBySpecieGato"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end4ownersWithPets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Owner/ownersWithPets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Owner",
+								"ownersWithPets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end5medicineWithLessThan",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Version",
+								"value": "1.1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5223/api/Medicine/medicineWithLessThan600?search=Fenbendazol 10%",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Medicine",
+								"medicineWithLessThan600"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Fenbendazol 10%"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end6petsOnQuarter",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Appointment/petsOn2023On4forHerida en la pata",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Appointment",
+								"petsOn2023On4forHerida en la pata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end7speciesOnGroups",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Version",
+								"value": "1.1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5223/api/Specie/speciesOnGroups?search=Perro",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Specie",
+								"speciesOnGroups"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Perro"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end8listMovementsWithTotal",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/MedicineMovement/listMovementsWithTotal",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"MedicineMovement",
+								"listMovementsWithTotal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end9petsCaredByVeterinarian",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Version",
+								"value": "1.1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5223/api/Appointment/petsCaredByVeterinarian2?search=Daisy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Appointment",
+								"petsCaredByVeterinarian2"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Daisy"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end10providerWithThisMedicine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Medicine/providerWithThisAmpicilina 500mg",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Medicine",
+								"providerWithThisAmpicilina 500mg"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end11petsWithThisRace",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Pet/petsWithThisBudgerigar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Pet",
+								"petsWithThisBudgerigar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "end12countPetsByRace",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Pet/countPetsByRace",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Pet",
+								"countPetsByRace"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GETAppointments",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Version",
+								"value": "1.1",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5223/api/Appointment?search=Veterinario1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Appointment"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "Veterinario1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POSTAppointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"DateAppointment\": \"2023-02-09\",\r\n    \"Hour\": \"15:30:00\",\r\n    \"Cause\": \"Herida en la pata\",\r\n    \"IdPet\": 3,\r\n    \"IdVeterinarian\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5223/api/Appointment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUTAppointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": 10,\r\n    \"DateAppointment\": \"2023-02-09\",\r\n    \"Hour\": \"15:45:00\",\r\n    \"Cause\": \"Herida en la pata\",\r\n    \"IdPet\": 3,\r\n    \"IdVeterinarian\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5223/api/Appointment/10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Appointment",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELAppointment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenV}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5223/api/Appointment/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5223",
+							"path": [
+								"api",
+								"Appointment",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -72,7 +72,8 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AppointmentDto>> Put(int id, [FromBody] AppointmentDto AppointmentDto)
         {
-            if (AppointmentDto == null)
+            var existingAppointment = _unitOfwork.Appointments.GetByIdAsync(id);
+            if (AppointmentDto == null || existingAppointment == null)
             {
                 return NotFound();
             }
